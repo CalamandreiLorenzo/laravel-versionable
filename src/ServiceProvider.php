@@ -6,6 +6,7 @@
  * (c) overtrue <i@overtrue.me>
  * This source file is subject to the MIT license that is bundled.
  */
+
 namespace CalamandreiLorenzo\LaravelVersionable;
 
 use function config_path;
