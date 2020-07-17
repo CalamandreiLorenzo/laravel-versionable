@@ -8,7 +8,6 @@
 
 use App\User;
 use CalamandreiLorenzo\LaravelVersionable\Version;
-use CalamandreiLorenzo\LaravelVersionable\VersionNumber;
 use CalamandreiLorenzo\LaravelVersionable\VersionPrimaryKey;
 
 return [

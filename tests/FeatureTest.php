@@ -11,9 +11,11 @@
 namespace Tests;
 
 use CalamandreiLorenzo\LaravelVersionable\Exceptions\NotVersionableModel;
+use CalamandreiLorenzo\LaravelVersionable\Version;
 use CalamandreiLorenzo\LaravelVersionable\VersionStrategy;
 use Exception;
 use Tests\Stubs\Post;
+use Tests\Stubs\PostNotVersionable;
 use Tests\Stubs\User;
 use function config;
 
@@ -42,6 +44,17 @@ class FeatureTest extends TestCase
         /** @var User user */
         $this->user = User::create(['name' => 'overtrue']);
         $this->actingAs($this->user);
+    }
+
+    /**
+     * post_not_versionable_should_throw
+     * @test
+     */
+    public function post_not_versionable_should_throw(): void
+    {
+        $post = PostNotVersionable::create(['title' => 'version1', 'content' => 'version1 content']);
+        $this->expectException(NotVersionableModel::class);
+        Version::createForModel($post);
     }
 
     /**

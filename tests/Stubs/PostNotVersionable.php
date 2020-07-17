@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use function auth;
 
 /**
- * Class Post
+ * Class PostNotVersionable
  * @package Tests\Stubs
  * @property-read int id
  * @property mixed user_id
@@ -34,24 +34,17 @@ use function auth;
  * @method static Builder|Post whereUpdatedAt($value)
  * @method static Post create($values)
  */
-class Post extends Model
+class PostNotVersionable extends Model
 {
-    use Versionable;
+    /**
+     * @var string $table
+     */
+    protected $table = 'posts';
 
     /**
      * @var string[] $fillable
      */
     protected $fillable = ['title', 'content', 'user_id', 'extends'];
-
-    /**
-     * @var string[] $versionable
-     */
-    protected $versionable = ['title', 'content', 'extends'];
-
-    /**
-     * @var string $versionStrategy
-     */
-    protected $versionStrategy = VersionStrategy::DIFF;
 
     /**
      * @var string[] $casts
@@ -67,7 +60,7 @@ class Post extends Model
     {
         parent::boot();
 
-        static::saving(static function (Post $post) {
+        static::saving(static function (PostNotVersionable $post) {
             $post->user_id = auth()->id();
         });
     }
