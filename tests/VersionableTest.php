@@ -20,12 +20,12 @@ use Tests\Stubs\User;
 use function config;
 
 /**
- * Class FeatureTest
+ * Class VersionableTest
  * @package Tests
  * @author 安正超 - overtrue
  * @github https://github.com/overtrue
  */
-class FeatureTest extends TestCase
+class VersionableTest extends TestCase
 {
     /**
      * @var User $user

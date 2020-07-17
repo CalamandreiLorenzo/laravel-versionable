@@ -16,24 +16,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Arr;
-use SebastianBergmann\Diff\Differ;
-use function array_keys;
 use function class_uses;
+use function collect;
 use function config;
 use function in_array;
 
 /**
- * Class Version.
+ * Class CascadeVersion.
  *
  * @property $id
  * @property Model $versionable
- * @property array $contents
+ * @property array $model_relations
  * @property int $version_number
  * @property $versionable_id
  * @property $versionable_type
  */
-class Version extends Model
+class CascadeVersion extends Model
 {
     use SoftDeletes;
 
@@ -41,7 +39,7 @@ class Version extends Model
      * @var string[] $casts
      */
     protected $casts = [
-        'contents' => 'array',
+        'model_relations' => 'array',
     ];
 
     /**
@@ -61,7 +59,7 @@ class Version extends Model
     {
         parent::boot();
 
-        self::creating(static function (Version $version) {
+        self::creating(static function (CascadeVersion $version) {
             $version->id = VersionColumnPrimaryKeyType::generate(
                 config('versionable.column_type')
             );
@@ -80,6 +78,7 @@ class Version extends Model
     }
 
     /**
+     * versionable
      * @return MorphTo
      */
     public function versionable(): MorphTo
@@ -89,56 +88,41 @@ class Version extends Model
 
     /**
      * createForModel
-     * @param Versionable|Model $model
-     * @return Version
+     * @param CascadeVersionable|Model $model
+     * @return CascadeVersion
      * @throws NotVersionableModel
+     * @throws Exceptions\MissingCascadeVersionableProperty
      */
-    public static function createForModel(Model $model): Version
+    public static function createForModel(Model $model): CascadeVersion
     {
-        if (!in_array(Versionable::class, class_uses($model), true)) {
+        if (!in_array(CascadeVersionable::class, class_uses($model), true)) {
             throw new NotVersionableModel(
-                "{$model} not use Versionable " . config('versionable.version_model')
+                "{$model} not use CascadeVersionable " . config('versionable.cascade_version_model')
             );
         }
-        $versionClass = $model->getVersionModel();
-        /** @var Version $version */
+        $versionClass = $model->getCascadeVersionModel();
+        /** @var CascadeVersion $version */
         $version = new $versionClass();
         VersionHelper::generateVersionAttribute($version, $versionClass, $model);
-        $version->contents = $model->getVersionableAttributes();
+
+        // cycle relations and add it
+        $version->model_relations = collect($model->load($model->getRelationsToVersion())->getRelations())
+            ->only($model->getRelationsToVersion())
+            ->map(static function (Model $model) {
+                // If the sub model implement the Versionable trait, store also the version in this moment
+                // otherwise only the identifier
+                $additionalVersion = [];
+                if (in_array(Versionable::class, class_uses($model), true)) {
+                    /** @var Versionable|Model $model */
+                    $additionalVersion['version_id'] = $model->lastVersion()->firstOrFail()->getKey();
+                }
+                return [
+                    'morph_class' => $model->getMorphClass(),
+                    'id' => $model->getKey(),
+                ] + $additionalVersion;
+            })->toArray();
 
         $version->save();
         return $version;
-    }
-
-    /**
-     * @return bool
-     */
-    public function revert(): bool
-    {
-        return $this->versionable->fill($this->contents)->save();
-    }
-
-    /**
-     * diff
-     * @param Versionable|Model|null $model
-     *
-     * @return string
-     * @throws NotVersionableModel
-     */
-    public function diff(Model $model = null): string
-    {
-        $model || $model = $this->versionable;
-
-        if ($model instanceof self) {
-            $source = $model->contents;
-        } else {
-            if (!in_array(Versionable::class, class_uses($model), true)) {
-                throw new NotVersionableModel("{$model} is not versionable");
-            }
-
-            $source = $model->versionableFromArray($this->versionable->toArray());
-        }
-
-        return (new Differ())->diff(Arr::only($source, array_keys($this->contents)), $this->contents);
     }
 }

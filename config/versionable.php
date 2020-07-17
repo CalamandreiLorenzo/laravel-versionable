@@ -7,6 +7,7 @@
  */
 
 use App\User;
+use CalamandreiLorenzo\LaravelVersionable\CascadeVersion;
 use CalamandreiLorenzo\LaravelVersionable\Version;
 use CalamandreiLorenzo\LaravelVersionable\VersionColumnPrimaryKeyType;
 
@@ -41,6 +42,24 @@ return [
      * @see CalamandreiLorenzo\LaravelVersionable\Version
      */
     'version_model' => Version::class,
+
+    /**
+     * Cascade settings
+     */
+    'cascade' => [
+        /**
+         * The model class for store versions.
+         * To check the main Version class check:
+         * @see CalamandreiLorenzo\LaravelVersionable\CascadeVersion
+         */
+        'version_model' => CascadeVersion::class,
+
+        /**
+         * Keep versions, you can redefine in target model.
+         * Default: 0 - Keep all versions.
+         */
+        'keep_versions' => 0,
+    ],
 
     /**
      * User settings

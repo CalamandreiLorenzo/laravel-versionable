@@ -15,26 +15,31 @@ use Illuminate\Support\Facades\Schema;
 
 /**
  * Class CreateVersionsTable
- * @author 安正超 - overtrue
- * @github https://github.com/overtrue
+ * @author Lorenzo Calamandrei
+ * @github https://github.com/CalamandreiLorenzo
  */
-class CreateVersionsTable extends Migration
+class CreateCascadeVersionsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('versions', static function (Blueprint $table) {
+        Schema::create('cascade_versions', static function (Blueprint $table) {
             $table->{config('versionable.column_type', 'unsignedBigInteger')}('id')
                 ->primary();
             VersionHelper::versionAttributeToSchema($table);
-            $table->json('contents')->nullable();
+            $table->json('model_relations')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unique(
-                ['versionable_id', 'versionable_type', 'version_number'],
-                'unique_version_for_model'
+                [
+                    'versionable_id',
+                    'versionable_type',
+                    'version_number'
+                ],
+                'unique_cascade_version_for_model'
             );
         });
     }
@@ -44,6 +49,6 @@ class CreateVersionsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('versions');
+        Schema::dropIfExists('cascade_versions');
     }
 }
