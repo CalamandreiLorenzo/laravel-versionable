@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+    composer:
+        build:
+            dockerfile: ./Dockerfile
+            context: .
+        working_dir: /app
+        user: "1000"
+        volumes:
+            - ./:/app

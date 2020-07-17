@@ -1,10 +1,11 @@
 {
-    "name": "overtrue/laravel-versionable",
+    "name": "calamandrei-lorenzo/laravel-versionable",
     "description": "Make Laravel model versionable.",
     "require": {
         "php": "^7.4",
-        "laravel/framework": "^5.8|^6.0|^7.0",
-        "sebastian/diff": "^3.0|^4.0"
+        "laravel/framework": "^6.0|^7.0",
+        "sebastian/diff": "^3.0|^4.0",
+        "doctrine/dbal": "^2.10"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.1|^9.0",
@@ -13,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Overtrue\\LaravelVersionable\\": "./src"
+            "CalamandreiLorenzo\\LaravelVersionable\\": "./src"
         }
     },
     "autoload-dev": {
@@ -24,7 +25,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Overtrue\\LaravelVersionable\\ServiceProvider"
+                "CalamandreiLorenzo\\LaravelVersionable\\ServiceProvider"
             ]
         }
     },
@@ -34,9 +35,9 @@
         "test": "vendor/bin/phpunit --colors=always --testdox"
     },
     "scripts-descriptions": {
-        "test": "Run all tests.",
         "check-style": "Run style checks (only dry run - no fixing!).",
-        "fix-style": "Run style checks and fix violations."
+        "fix-style": "Run style checks and fix violations.",
+        "test": "Run all tests."
     },
     "license": "MIT"
 }

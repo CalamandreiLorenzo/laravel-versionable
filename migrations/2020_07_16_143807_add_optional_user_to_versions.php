@@ -8,16 +8,17 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+use CalamandreiLorenzo\LaravelVersionable\Version;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
  * Class AddDeletedAtToVersions
- * @author 安正超 - overtrue
- * @github https://github.com/overtrue
+ * @author Lorenzo Calamandrei
+ * @github https://github.com/CalamandreiLorenzo
  */
-class AddDeletedAtToVersions extends Migration
+class AddOptionalUserToVersions extends Migration
 {
     /**
      * Run the migrations.
@@ -27,7 +28,9 @@ class AddDeletedAtToVersions extends Migration
     public function up(): void
     {
         Schema::table('versions', static function (Blueprint $table) {
-            $table->softDeletes();
+            $table->{config('versionable.user_key_type', 'unsignedBigInteger')}(
+                config('versionable.user_foreign_key', 'user_id')
+            )->nullable()->change();
         });
     }
 
@@ -35,11 +38,19 @@ class AddDeletedAtToVersions extends Migration
      * Reverse the migrations.
      *
      * @return void
+     * @throws Exception
      */
     public function down(): void
     {
+        // Delete all versions that doesn't have a user, because is mandatory before this transaction
+        Version::whereDoesntHave(
+            config('versionable.user_foreign_key', 'user_id')
+        )->delete();
+
         Schema::table('versions', static function (Blueprint $table) {
-            $table->dropSoftDeletes();
+            $table->{config('versionable.user_key_type', 'unsignedBigInteger')}(
+                config('versionable.user_foreign_key', 'user_id')
+            )->change();
         });
     }
 }

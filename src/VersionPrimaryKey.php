@@ -10,20 +10,20 @@
 namespace CalamandreiLorenzo\LaravelVersionable;
 
 /**
- * Class VersionStrategy
+ * Class VersionPrimaryKey
  * @package CalamandreiLorenzo\LaravelVersionable
- * @author 安正超 - overtrue
- * @github https://github.com/overtrue
+ * @author Lorenzo Calamandrei
+ * @github https://github.com/CalamandreiLorenzo
  */
-class VersionStrategy
+class VersionPrimaryKey
 {
     /**
-     * @const string DIFF
+     * @const string UUID
      */
-    public const DIFF = 'diff';
+    public const UUID = 'uuid';
 
     /**
-     * @const string DIFF
+     * @const string INT
      */
-    public const SNAPSHOT = 'snapshot';
+    public const INT = 'integer';
 }

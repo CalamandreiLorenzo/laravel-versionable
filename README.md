@@ -1,15 +1,17 @@
 <h1 align="center"> laravel-versionable </h1>
 
+Forked from [overtrue/laravel-versionable](https://github.com/overtrue/laravel-versionable)
+
 <p align="center"> ⏱️ Make Laravel model versionable.</p>
 
 <p align="center">
-<a href="https://github.com/overtrue/laravel-versionable/actions"><img src="https://github.com/overtrue/laravel-versionable/workflows/CI/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/overtrue/laravel-versionable"><img src="https://poser.pugx.org/overtrue/laravel-versionable/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/overtrue/laravel-versionable"><img src="https://poser.pugx.org/overtrue/laravel-versionable/v/unstable.svg" alt="Latest Unstable Version"></a>
-<a href="https://scrutinizer-ci.com/g/overtrue/laravel-versionable/?branch=master"><img src="https://scrutinizer-ci.com/g/overtrue/laravel-versionable/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
-<a href="https://scrutinizer-ci.com/g/overtrue/laravel-versionable/?branch=master"><img src="https://scrutinizer-ci.com/g/overtrue/laravel-versionable/badges/coverage.png?b=master" alt="Code Coverage"></a>
-<a href="https://packagist.org/packages/overtrue/laravel-versionable"><img src="https://poser.pugx.org/overtrue/laravel-versionable/downloads" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/overtrue/laravel-versionable"><img src="https://poser.pugx.org/overtrue/laravel-versionable/license" alt="License"></a>
+<a href="https://github.com/CalamandreiLorenzo/laravel-versionable/actions"><img src="https://github.com/CalamandreiLorenzo/laravel-versionable/workflows/CI/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/CalamandreiLorenzo/laravel-versionable/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/CalamandreiLorenzo/laravel-versionable/v/unstable.svg" alt="Latest Unstable Version"></a>
+<a href="https://scrutinizer-ci.com/g/CalamandreiLorenzo/laravel-versionable/?branch=master"><img src="https://scrutinizer-ci.com/g/CalamandreiLorenzo/laravel-versionable/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
+<a href="https://scrutinizer-ci.com/g/CalamandreiLorenzo/laravel-versionable/?branch=master"><img src="https://scrutinizer-ci.com/g/CalamandreiLorenzo/laravel-versionable/badges/coverage.png?b=master" alt="Code Coverage"></a>
+<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/CalamandreiLorenzo/laravel-versionable/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/CalamandreiLorenzo/laravel-versionable/license" alt="License"></a>
 </p>
 
 
@@ -38,13 +40,13 @@ $ composer require overtrue/laravel-versionable -vvv
 Optional, you can publish the config file:
 
 ```bash
-$ php artisan vendor:publish --provider="Overtrue\\LaravelVersionable\\ServiceProvider" --tag=config
+$ php artisan vendor:publish --provider="CalamandreiLorenzo\\LaravelVersionable\\ServiceProvider" --tag=config
 ```
 
 And if you want to custom the migration of the versions table, you can publish the migration file to your database path:
 
 ```bash
-$ php artisan vendor:publish --provider="Overtrue\\LaravelVersionable\\ServiceProvider" --tag=migrations
+$ php artisan vendor:publish --provider="CalamandreiLorenzo\\LaravelVersionable\\ServiceProvider" --tag=migrations
 ```
 
 Then run this command to create a database migration:
@@ -55,10 +57,10 @@ $ php artisan migrate
 
 ## Usage
 
-Add `Overtrue\LaravelVersionable\Versionable` trait to the model and set versionable attributes:
+Add `CalamandreiLorenzo\LaravelVersionable\Versionable` trait to the model and set versionable attributes:
 
 ```php
-use Overtrue\LaravelVersionable\Versionable;
+use CalamandreiLorenzo\LaravelVersionable\Versionable;
 
 class Post extends Model
 {
@@ -101,11 +103,13 @@ $post->lastVersion;
 Reversion a model instance to the specified version:
 
 ```php
-$post->getVersion(3)->revert();
+$post->getVersion('uuid-...')->revert();
+$post->getVersionByVersionNumber('uuid-...')->revert();
 
 // or
 
-$post->revertToVersion(3);
+$post->revertToVersion('uuid-...');
+$post->revertToVersionNumber(3);
 ```
 
 ### Remove versions
@@ -147,8 +151,8 @@ Post::withoutVersion(function () use ($post) {
 
 You can set the following different version policies through property `protected $versionStrategy`:
 
--  `Overtrue\LaravelVersionable::DIFF` - Version content will only contain changed attributes (Default Strategy).
--  `Overtrue\LaravelVersionable::SNAPSHOT` - Version content will contain all versionable attributes values. 
+-  `CalamandreiLorenzo\LaravelVersionable::DIFF` - Version content will only contain changed attributes (Default Strategy).
+-  `CalamandreiLorenzo\LaravelVersionable::SNAPSHOT` - Version content will contain all versionable attributes values. 
 
 ## Contributing
 
