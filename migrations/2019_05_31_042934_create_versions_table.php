@@ -25,11 +25,11 @@ class CreateVersionsTable extends Migration
     public function up(): void
     {
         Schema::create('versions', static function (Blueprint $table) {
-            $table->{config('versionable.key_type', 'unsignedBigInteger')}('id')
+            $table->{config('versionable.column_type', 'unsignedBigInteger')}('id')
                 ->primary();
             $table->unsignedBigInteger('version_number');
-            $table->{config('versionable.user_key_type', 'unsignedBigInteger')}(
-                config('versionable.user_foreign_key', 'user_id')
+            $table->{config('versionable.user.key_type', 'unsignedBigInteger')}(
+                config('versionable.user.foreign_key', 'user_id')
             );
             $table->string('versionable_id');
             $table->string('versionable_type');

@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use SebastianBergmann\Diff\Differ;
 use function array_keys;
 use function auth;
@@ -45,14 +44,13 @@ class Version extends Model
         'contents' => 'array',
     ];
 
+    /**
+     * Version constructor.
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
-        if (
-            config('versionable.key_type', VersionPrimaryKey::UUID)
-            === VersionPrimaryKey::UUID
-        ) {
-            $this->keyType = "string";
-        }
+        $this->keyType = config('versionable.key_type', 'string');
         parent::__construct($attributes);
     }
 
@@ -64,12 +62,9 @@ class Version extends Model
         parent::boot();
 
         self::creating(static function (Version $version) {
-            if (
-                config('versionable.key_type', VersionPrimaryKey::UUID)
-                    === VersionPrimaryKey::UUID
-            ) {
-                $version->id = Str::uuid();
-            }
+            $version->id = VersionColumnPrimaryKeyType::generate(
+                config('versionable.column_type')
+            );
         });
     }
 
@@ -79,8 +74,8 @@ class Version extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(
-            config('versionable.user_model'),
-            config('versionable.user_foreign_key')
+            config('versionable.user.model'),
+            config('versionable.user.foreign_key')
         );
     }
 
@@ -113,7 +108,7 @@ class Version extends Model
             ->max('version_number')) + 1;
         $version->versionable_id = $model->getKey();
         $version->versionable_type = $model->getMorphClass();
-        $version->{config('versionable.user_foreign_key')} = auth()->id();
+        $version->{config('versionable.user.foreign_key')} = auth()->id();
         $version->contents = $model->getVersionableAttributes();
 
         $version->save();

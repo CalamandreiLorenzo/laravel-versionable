@@ -8,7 +8,7 @@
 
 use App\User;
 use CalamandreiLorenzo\LaravelVersionable\Version;
-use CalamandreiLorenzo\LaravelVersionable\VersionPrimaryKey;
+use CalamandreiLorenzo\LaravelVersionable\VersionColumnPrimaryKeyType;
 
 return [
     /**
@@ -18,7 +18,16 @@ return [
      * Change this type of settings only on the startup of the package,
      * otherwise you can get error later
      */
-    'key_type' => VersionPrimaryKey::UUID,
+    'key_type' => 'string',
+
+    /**
+     * Versions key type column
+     * @see CreateVersionsTable
+     *
+     * Change this type of settings only on the startup of the package,
+     * otherwise you can get error later
+     */
+    'column_type' => VersionColumnPrimaryKeyType::UUID,
 
     /**
      * Keep versions, you can redefine in target model.
@@ -34,34 +43,39 @@ return [
     'version_model' => Version::class,
 
     /**
-     * User foreign key name of versions table.
-     * @see CreateVersionsTable
-     *
-     * Change this type of settings only on the startup of the package,
-     * otherwise you can get error later
+     * User settings
      */
-    'user_foreign_key' => 'user_id',
+    'user' => [
+        /**
+         * User foreign key name of versions table.
+         * @see CreateVersionsTable
+         *
+         * Change this type of settings only on the startup of the package,
+         * otherwise you can get error later
+         */
+        'foreign_key' => 'user_id',
 
-    /**
-     * User key type used to create the columns in the versions table
-     * @see CreateVersionsTable
-     *
-     * Change this type of settings only on the startup of the package,
-     * otherwise you can get error later
-     */
-    'user_key_type' => 'uuid',
+        /**
+         * User key type used to create the columns in the versions table
+         * @see CreateVersionsTable
+         *
+         * Change this type of settings only on the startup of the package,
+         * otherwise you can get error later
+         */
+        'key_type' => 'uuid',
 
-    /**
-     * The model class for user.
-     */
-    'user_model' => User::class,
+        /**
+         * The model class for user.
+         */
+        'model' => User::class,
 
-    /**
-     * The user is mandatory for the new versions?
-     * In case of missing user the versions will not be created and skipped
-     *
-     * Change this type of settings only on the startup of the package,
-     * otherwise you can get error later
-     */
-    'mandatory_user' => false
+        /**
+         * The user is mandatory for the new versions?
+         * In case of missing user the versions will not be created and skipped
+         *
+         * Change this type of settings only on the startup of the package,
+         * otherwise you can get error later
+         */
+        'mandatory' => false
+    ],
 ];

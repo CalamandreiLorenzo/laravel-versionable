@@ -27,11 +27,13 @@ class AddOptionalUserToVersions extends Migration
      */
     public function up(): void
     {
-        Schema::table('versions', static function (Blueprint $table) {
-            $table->{config('versionable.user_key_type', 'unsignedBigInteger')}(
-                config('versionable.user_foreign_key', 'user_id')
-            )->nullable()->change();
-        });
+        if (!config('versionable.user.mandatory', false)) {
+            Schema::table('versions', static function (Blueprint $table) {
+                $table->{config('versionable.user.key_type', 'unsignedBigInteger')}(
+                    config('versionable.user.foreign_key', 'user_id')
+                )->nullable()->change();
+            });
+        }
     }
 
     /**
@@ -44,12 +46,12 @@ class AddOptionalUserToVersions extends Migration
     {
         // Delete all versions that doesn't have a user, because is mandatory before this transaction
         Version::whereDoesntHave(
-            config('versionable.user_foreign_key', 'user_id')
+            config('versionable.user.foreign_key', 'user_id')
         )->delete();
 
         Schema::table('versions', static function (Blueprint $table) {
-            $table->{config('versionable.user_key_type', 'unsignedBigInteger')}(
-                config('versionable.user_foreign_key', 'user_id')
+            $table->{config('versionable.user.key_type', 'unsignedBigInteger')}(
+                config('versionable.user.foreign_key', 'user_id')
             )->change();
         });
     }

@@ -10,8 +10,6 @@
 
 namespace Tests\Stubs;
 
-use CalamandreiLorenzo\LaravelVersionable\Versionable;
-use CalamandreiLorenzo\LaravelVersionable\VersionStrategy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use function auth;
