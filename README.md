@@ -6,12 +6,12 @@ Forked from [overtrue/laravel-versionable](https://github.com/overtrue/laravel-v
 
 <p align="center">
 <a href="https://github.com/CalamandreiLorenzo/laravel-versionable/actions"><img src="https://github.com/CalamandreiLorenzo/laravel-versionable/workflows/CI/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/CalamandreiLorenzo/laravel-versionable/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/CalamandreiLorenzo/laravel-versionable/v/unstable.svg" alt="Latest Unstable Version"></a>
+<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/calamandrei-lorenzo/laravel-versionable/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/calamandrei-lorenzo/laravel-versionable/v/unstable.svg" alt="Latest Unstable Version"></a>
 <a href="https://scrutinizer-ci.com/g/CalamandreiLorenzo/laravel-versionable/?branch=master"><img src="https://scrutinizer-ci.com/g/CalamandreiLorenzo/laravel-versionable/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
 <a href="https://scrutinizer-ci.com/g/CalamandreiLorenzo/laravel-versionable/?branch=master"><img src="https://scrutinizer-ci.com/g/CalamandreiLorenzo/laravel-versionable/badges/coverage.png?b=master" alt="Code Coverage"></a>
-<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/CalamandreiLorenzo/laravel-versionable/downloads" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/CalamandreiLorenzo/laravel-versionable/license" alt="License"></a>
+<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/calamandrei-lorenzo/laravel-versionable/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/CalamandreiLorenzo/laravel-versionable"><img src="https://poser.pugx.org/calamandrei-lorenzo/laravel-versionable/license" alt="License"></a>
 </p>
 
 
