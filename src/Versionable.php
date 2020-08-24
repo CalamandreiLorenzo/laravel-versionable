@@ -20,8 +20,8 @@ use function array_diff_key;
 use function array_intersect_key;
 use function array_keys;
 use function config;
-use function property_exists;
 use function optional;
+use function property_exists;
 
 /**
  * Trait Versionable

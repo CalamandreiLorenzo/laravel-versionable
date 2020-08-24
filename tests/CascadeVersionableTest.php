@@ -13,7 +13,7 @@ use function config;
 /**
  * Class CascadeVersionableTest
  * @package Tests
- * @author Lorenzo Calamandrei
+ * @author Lorenzo Calamandrei <calamandrei.lorenzo.work@gmail.com>
  * @github https://github.com/CalamndreiLorenzo
  */
 class CascadeVersionableTest extends TestCase

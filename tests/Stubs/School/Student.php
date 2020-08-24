@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Class Son
  * @package Tests\Stubs\School
- * @author Lorenzo Calamandrei
+ * @author Lorenzo Calamandrei <calamandrei.lorenzo.work@gmail.com>
  * @github https://github.com/CalamandreiLorenzo
  *
  * @property int $id

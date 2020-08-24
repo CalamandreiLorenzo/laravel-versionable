@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 /**
  * Class Dad
  * @package Tests\Stubs\School
- * @author Lorenzo Calamandrei
+ * @author Lorenzo Calamandrei <calamandrei.lorenzo.work@gmail.com>
  * @github https://github.com/CalamandreiLorenzo
  *
  * @property int $id
